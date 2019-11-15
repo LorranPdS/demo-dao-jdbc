@@ -1,5 +1,6 @@
 package application;
 
+import java.util.Date;
 import java.util.List;
 
 import model.dao.DaoFactory;
@@ -25,9 +26,14 @@ public class Program {
 		}
 		
 		System.out.println("\n=== TEST 3: seller findAll ====");
-		list = sellerDao.findAll(); // Deixamos apenas list porque estamos reaproveitando a declaração da linha 22
+		list = sellerDao.findAll();
 		for(Seller obj : list) {
 			System.out.println(obj);
 		}
+		
+		System.out.println("\n=== TEST 4: seller insert ===="); // Vamos criar um novo objeto abaixo chamado newSeller
+		Seller newSeller = new Seller(null, "Greg", "greg@gmail.com", new Date(), 4000.0, department); // Aproveitaremos o department da linha 22
+		sellerDao.insert(newSeller); // Para que os dados acima sejam inseridos no banco de dados
+		System.out.println("Inserted! New id = " + newSeller.getId()); // Ele entra no SellerDao e pega o id
 	}
 }
