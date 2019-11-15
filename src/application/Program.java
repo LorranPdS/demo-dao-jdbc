@@ -2,6 +2,7 @@ package application;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import model.dao.DaoFactory;
 import model.dao.SellerDao;
@@ -11,7 +12,7 @@ import model.entities.Seller;
 public class Program {
 
 	public static void main(String[] args) {
-
+		Scanner sc = new Scanner(System.in);
 		SellerDao sellerDao = DaoFactory.createSellerDao();
 		
 		System.out.println("=== TEST 1: seller findById ====");
@@ -37,9 +38,17 @@ public class Program {
 		System.out.println("Inserted! New id = " + newSeller.getId());
 		
 		System.out.println("\n=== TEST 5: seller update ====");
-		seller = sellerDao.findById(1); // Aqui vamos reaproveitar a variável seller criada na linha 18 e carregar os dados do seller de id 1
-		seller.setName("Martha Waine"); // A partir do meu objeto seller, eu vou setar um novo nome para ele
-		sellerDao.update(seller); // Aqui eu vou salvar esse vendedor, atualizando os dados dele
-		System.out.println("Update completed"); // Essa linha é somente para termos um indicativo de que terminou, ou seja, ela é dispensável
+		seller = sellerDao.findById(1);
+		seller.setName("Martha Waine");
+		sellerDao.update(seller);
+		System.out.println("Update completed");
+		
+		System.out.println("\n=== TEST 6: seller delete ====");
+		System.out.println("Enter id for delete test: ");
+		int id = sc.nextInt();
+		sellerDao.deleteById(id);
+		System.out.println("Delete completed");		
+		
+		sc.close();		
 	}
 }

@@ -69,14 +69,14 @@ public class SellerDaoJDBC implements SellerDao {
 					+ "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? "
 					+ "WHERE Id = ?");
 
-			st.setString(1, obj.getName()); // Das linhas 72 a 76 será tudo igual
+			st.setString(1, obj.getName());
 			st.setString(2, obj.getEmail());
 			st.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
 			st.setDouble(4, obj.getBaseSalary());
 			st.setInt(5, obj.getDepartment().getId());
-			st.setInt(6, obj.getId()); // Esse será o id do vendedor
+			st.setInt(6, obj.getId());
 
-			st.executeUpdate(); // Podemos apenas deixar aqui um comando para executar o update (executar a atualização)
+			st.executeUpdate();
 			
 		}
 
@@ -91,7 +91,22 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			st = conn.prepareStatement("DELETE FROM seller WHERE Id = ?");
+			
+			st.setInt(1, id);
+			
+			st.executeUpdate();
+			
+		}
+		catch (SQLException e){
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
